@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -12,34 +12,29 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.anton.snakeAI.controller.MainController">
+<AnchorPane maxHeight="100.0" minHeight="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.anton.snakeAI.controller.MainController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#createHumanGame" text="New Human Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#createNeuroGame" text="New Neuro Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#createNeuralGame" text="New Neuro Game" />
                   <MenuItem mnemonicParsing="false" onAction="#createBehaviorGame" text="New Behavior Tree Game" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <HBox layoutX="200.0" layoutY="227.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <HBox layoutX="200.0" layoutY="227.0" maxHeight="1.7976931348623157E308" prefHeight="561.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <AnchorPane prefHeight="600.0" prefWidth="550.0">
+            <AnchorPane prefHeight="200.0" prefWidth="550.0">
                <children>
-                  <AnchorPane layoutX="10.0" layoutY="10.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-                     <children>
-                        <Canvas fx:id="canvas" height="500.0" width="500.0" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="canvasPane" layoutX="10.0" layoutY="10.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <AnchorPane fx:id="rightPane" disable="true" maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="250.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button layoutX="181.0" layoutY="536.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" AnchorPane.rightAnchor="10.0" />
+                  <Button layoutX="181.0" layoutY="536.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                   <GridPane layoutX="2.0" layoutY="14.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="72.0" />
@@ -53,10 +48,27 @@
                      <children>
                         <Label text="Game Type:" />
                         <Label text="Scores:" GridPane.rowIndex="1" />
-                        <Label fx:id="gameTypeLabel" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="scoresLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="gameTypeLabel" GridPane.columnIndex="1" />
+                        <Label fx:id="scoresLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
+                  <AnchorPane fx:id="neuralPane" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
+                     <children>
+                        <AnchorPane fx:id="trainigPane" disable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="25.0">
+                           <children>
+                              <Label layoutX="2.0" layoutY="39.0" text="Current Button:" />
+                              <Label fx:id="currentButtonLabel" layoutX="95.0" layoutY="39.0" text="DOWN" />
+                              <Button layoutX="11.0" layoutY="69.0" mnemonicParsing="false" onAction="#saveTick" text="Save Tick" />
+                              <Button layoutX="84.0" layoutY="69.0" mnemonicParsing="false" onAction="#saveSet" text="Save Set" />
+                              <Button layoutX="11.0" layoutY="136.0" mnemonicParsing="false" onAction="#startTraining" text="Start Trainig" />
+                              <Button layoutX="100.0" layoutY="136.0" mnemonicParsing="false" onAction="#startRecording" text="Start recording" />
+                              <Label layoutX="14.0" layoutY="107.0" text="Status" />
+                              <Label fx:id="statusLabel" layoutX="62.0" layoutY="107.0" />
+                           </children>
+                        </AnchorPane>
+                        <CheckBox fx:id="trainingModeCheck" layoutX="8.0" layoutY="6.0" mnemonicParsing="false" text="Training Mode" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>

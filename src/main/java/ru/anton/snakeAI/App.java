@@ -20,7 +20,7 @@ public class App extends Application {
         loader.setLocation(getClass().getResource("/main.fxml"));
         try {
             Parent parent = loader.load();
-            Scene scene = new Scene(parent, 800, 600);
+            Scene scene = new Scene(parent, 800, 400);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

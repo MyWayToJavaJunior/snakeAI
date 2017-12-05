@@ -1,9 +1,13 @@
 package ru.anton.snakeAI;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import ru.anton.snakeAI.model.Field;
 import ru.anton.snakeAI.model.GameElement;
 import ru.anton.snakeAI.model.Snake;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Game implements GameElement{
@@ -11,11 +15,15 @@ public class Game implements GameElement{
     private Snake snake;
     private int speed;
     private boolean gameOver = false;
+    private List<GameEventHandler> handlers;
+    private IntegerProperty score = new SimpleIntegerProperty();
 
     public Game(int fieldSize, int minSnakeSize, int speed) {
         snake = new Snake(minSnakeSize);
         field = new Field(fieldSize, snake);
         setSpeed(speed);
+        handlers = new ArrayList<>();
+        score.setValue(0);
     }
 
     private void setSpeed(int speed) {
@@ -36,6 +44,8 @@ public class Game implements GameElement{
         if (checkFood()){
             snake.eat();
             field.eatFood();
+            score.setValue(score.getValue()+1);
+            handlers.forEach(h->h.handle(GameEvent.EAT));
         }
         if (!checkBound() || checkSelf()) {
             gameOver = true;
@@ -74,5 +84,21 @@ public class Game implements GameElement{
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void addEventHandler(GameEventHandler handler){
+        handlers.add(handler);
+    }
+
+    public IntegerProperty getScoreProperty() {
+        return score;
+    }
+
+    public interface GameEventHandler{
+        void handle(GameEvent event);
+    }
+
+    public enum GameEvent {
+        EAT, GEME_OVER
     }
 }
