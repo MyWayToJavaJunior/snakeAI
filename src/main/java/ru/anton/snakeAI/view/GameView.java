@@ -26,6 +26,7 @@ public class GameView {
         gc.setFill(Color.BLUE);
         gc.setLineWidth(1);
         drawSnakeElem(snake.getHead());
+        drawFood(field.getFood());
         gc.setFill(Color.YELLOW);
         for (int i = 1; i < snake.getElems().size(); i++) {
             drawSnakeElem(snake.getElems().get(i));
@@ -36,5 +37,10 @@ public class GameView {
         System.out.println(coords[0]);
         gc.fillRect(coords[0]*snakeElemSize, coords[1]*snakeElemSize, snakeElemSize, snakeElemSize);
         gc.strokeRect(coords[0]*snakeElemSize, coords[1]*snakeElemSize, snakeElemSize, snakeElemSize);
+    }
+
+    private void drawFood(int[] coords){
+        gc.setFill(Color.GREEN);
+        gc.fillRect(coords[0]*snakeElemSize, coords[1]*snakeElemSize, snakeElemSize, snakeElemSize);
     }
 }

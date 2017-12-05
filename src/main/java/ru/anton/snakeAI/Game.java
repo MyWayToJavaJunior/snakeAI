@@ -8,7 +8,7 @@ public class Game implements GameElement{
     private Field field;
     private Snake snake;
     private int speed;
-    private boolean gemeOver = false;
+    private boolean gameOver = false;
 
     public Game(int fieldSize, int minSnakeSize, int speed) {
         snake = new Snake(minSnakeSize);
@@ -17,11 +17,11 @@ public class Game implements GameElement{
     }
 
     private void setSpeed(int speed) {
-        this.speed = 500/speed;
+        this.speed = 1000/speed;
     }
 
     public void start() throws InterruptedException {
-        while (!gemeOver){
+        while (!gameOver){
             Thread.sleep(speed);
             tick();
         }
@@ -31,16 +31,27 @@ public class Game implements GameElement{
     public void tick() {
         field.tick();
         snake.tick();
-        if (!checkBound()) {
-            gemeOver = true;
+        if (checkFood()){
+            snake.eat();
+            field.eatFood();
+        }
+        if (!checkBound() && checkSelf()) {
+            gameOver = true;
             return;
         }
         if (snake.getHead()[0]==field.getFood()[0] && snake.getHead()[1]==field.getFood()[1]) snake.eat();
     }
 
     private boolean checkBound(){
-        if (snake.getHead()[0]<0 || snake.getHead()[0]>field.getSize() || snake.getHead()[1]<0 || snake.getHead()[1]>field.getSize()) return false;
-        return true;
+        return snake.getHead()[0] >= 0 && snake.getHead()[0] <= field.getSize() && snake.getHead()[1] >= 0 && snake.getHead()[1] <= field.getSize();
+    }
+
+    private boolean checkSelf(){
+        return snake.getElems().stream().anyMatch(e->e[0]==snake.getHead()[0]);
+    }
+
+    private boolean checkFood(){
+        return snake.getHead()[0] == field.getFood()[0] && snake.getHead()[1] == field.getFood()[1];
     }
 
     public Field getField() {
@@ -51,8 +62,8 @@ public class Game implements GameElement{
         return snake;
     }
 
-    public boolean isGemeOver(){
-        return gemeOver;
+    public boolean isGameOver(){
+        return gameOver;
     }
 
     public int getSpeed() {

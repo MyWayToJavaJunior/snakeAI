@@ -1,5 +1,6 @@
 package ru.anton.snakeAI.controller;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import ru.anton.snakeAI.view.GameView;
 public class MainController {
     private Game game;
     private GameView gameView;
+    Timeline timeline;
 
     @FXML
     private Canvas canvas;
@@ -45,11 +47,26 @@ public class MainController {
 
     @FXML
     void startGame(ActionEvent event) {
+        timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(game.getSpeed()),
+                        ae -> {
+                            game.tick();
+                            gameView.draw();
+                            if (game.isGameOver()){
+                                timeline.stop();
+                            }
+                        }
+                )
+        );
+
+        timeline.setCycleCount(Animation.INDEFINITE); //Ограничим число повторений
+        timeline.play();
 
     }
 
     public void initialize(){
-        game = new Game(50, 5, 1);
+        game = new Game(50, 5, 5);
         gameView = new GameView(game.getField(), game.getSnake(), canvas.getGraphicsContext2D(), (int) canvas.getWidth());
         gameView.draw();
 
@@ -67,18 +84,6 @@ public class MainController {
                 }
         });
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.millis(game.getSpeed()),
-                        ae -> {
-                            game.tick();
-                            gameView.draw();
-                        }
-                )
-        );
-
-        timeline.setCycleCount(5); //Ограничим число повторений
-        timeline.play();
 
     }
 
