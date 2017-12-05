@@ -4,7 +4,7 @@ import ru.anton.snakeAI.model.Field;
 import ru.anton.snakeAI.model.GameElement;
 import ru.anton.snakeAI.model.Snake;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class Game implements GameElement{
     private Field field;
@@ -37,7 +37,7 @@ public class Game implements GameElement{
             snake.eat();
             field.eatFood();
         }
-        if (!checkBound() || !checkSelf()) {
+        if (!checkBound() || checkSelf()) {
             gameOver = true;
             return;
         }
@@ -49,15 +49,11 @@ public class Game implements GameElement{
     }
 
     private boolean checkSelf(){
-        AtomicBoolean result = new AtomicBoolean(false);
-        snake.getElems().forEach(e->{
-            if (e[0]==snake.getHead()[0] && e[1]==snake.getHead()[1]) {
-                result.set(true);
-                return;
-            }
-        });
-        System.out.println(result.get());
-        return result.get();
+        boolean result = false;
+        for (int i = 1; i < snake.getElems().size(); i++) {
+            if (snake.getElems().get(i)[0]==snake.getHead()[0] && snake.getElems().get(i)[1]==snake.getHead()[1]) result = true;
+        }
+        return result;
     }
 
     private boolean checkFood(){

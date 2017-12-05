@@ -34,7 +34,6 @@ public class GameView {
     }
 
     private void drawSnakeElem(int[] coords){
-        System.out.println(coords[0]);
         gc.fillRect(coords[0]*snakeElemSize, coords[1]*snakeElemSize, snakeElemSize, snakeElemSize);
         gc.strokeRect(coords[0]*snakeElemSize, coords[1]*snakeElemSize, snakeElemSize, snakeElemSize);
     }
