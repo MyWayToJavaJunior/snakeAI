@@ -10,11 +10,15 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import ru.anton.snakeAI.Game;
@@ -22,6 +26,8 @@ import ru.anton.snakeAI.gamers.Gamer;
 import ru.anton.snakeAI.gamers.HumanGamer;
 import ru.anton.snakeAI.model.Directions;
 import ru.anton.snakeAI.view.GameView;
+
+import java.io.IOException;
 
 public class MainController {
     private Game game;
@@ -35,14 +41,7 @@ public class MainController {
     @FXML
     private AnchorPane neuralPane;
 
-    @FXML
-    private AnchorPane trainigPane;
 
-    @FXML
-    private Label currentButtonLabel;
-
-    @FXML
-    private CheckBox trainingModeCheck;
 
     @FXML
     private AnchorPane canvasPane;
@@ -57,26 +56,20 @@ public class MainController {
     private Label scoresLabel;
 
     @FXML
-    private Label statusLabel;
-
-    @FXML
-    void saveSet(ActionEvent event) {
-
-    }
-
-    @FXML
-    void saveTick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void startRecording(ActionEvent event) {
-        statusLabel.setText("recording...");
-    }
-
-    @FXML
-    void startTraining(ActionEvent event) {
-        statusLabel.setText("training...");
+    void goToTraining(){
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/training.fxml"));
+        try {
+            Parent parent = loader.load();
+            TrainingController controller = loader.getController();
+            controller.setCanvas(canvas);
+            Scene scene = new Scene(parent, 400, 300);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -99,12 +92,7 @@ public class MainController {
         gameTypeLabel.setText("Neural network game");
         neuralPane.setVisible(true);
 
-        trainingModeCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                trainigPane.setDisable(!newValue);
-            }
-        });
+
 
     }
 
