@@ -1,6 +1,8 @@
 package ru.anton.snakeAI.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Field implements GameElement{
     private final static int foodLive = 30;
@@ -46,4 +48,6 @@ public class Field implements GameElement{
     public int getSize() {
         return size;
     }
+
+
 }

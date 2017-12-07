@@ -54,6 +54,8 @@
                   <AnchorPane fx:id="neuralPane" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
                      <children>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToTraining" text="Go To Training" />
+                        <Button layoutX="14.0" layoutY="48.0" mnemonicParsing="false" onAction="#loadNetwork" text="Load Network" />
+                        <Label fx:id="loadedNetwork" layoutX="118.0" layoutY="52.0" text="Label" />
                      </children>
                   </AnchorPane>
                </children>

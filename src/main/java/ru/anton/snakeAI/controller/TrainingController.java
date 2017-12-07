@@ -51,11 +51,25 @@ public class TrainingController {
     @FXML
     private Label recordsLabel;
 
+    @FXML
+    void saveNetwork() {
+        FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
+        fileChooser.setTitle("Save Neural Network");//Заголовок диалога
+
+        File file = fileChooser.showSaveDialog(buttonLabel.getScene().getWindow());
+        if (file != null) {
+            neuralNetwork.saveNetwork(file);
+
+            networkPathLabel.setText(file.getName());
+        }
+    }
+
 
     @FXML
     void createNetwork(ActionEvent event) {
-        int size = (int) (canvas.getWidth()/10*canvas.getWidth()/10);
-        neuralNetwork.createNetwork(size, size*2, 1);
+        int size = (int) (canvas.getWidth() / 10 * canvas.getWidth() / 10);
+        neuralNetwork.createNetwork(size, size * 2, 4);
+        networkPathLabel.setText("New Network");
     }
 
     @FXML
@@ -77,11 +91,11 @@ public class TrainingController {
     @FXML
     void startRecord(ActionEvent event) {
         isRecording = true;
-        game = new Game((int) (canvas.getWidth()/10), 5, 7);
+        game = new Game((int) (canvas.getWidth() / 10), 5, 7);
         gameView = new GameView(game.getField(), game.getSnake(), canvas.getGraphicsContext2D(), (int) canvas.getWidth());
         gameView.draw();
 
-        gamer = new HumanGamer(game.getField(), game.getSnake(),recordsLabel.getParent().getParent());
+        gamer = new HumanGamer(game.getField(), game.getSnake(), recordsLabel.getParent().getParent());
         gamer.init();
 
         recordStatusLabel.setText("Recording");
@@ -119,18 +133,22 @@ public class TrainingController {
     }
 
     @FXML
-    void saveTick(){
-        if (isRecording){
+    void saveTick() {
+        if (isRecording) {
             KeyCode code = gamer.game();
             trainingManager.addData(new TrainingData(game.getSnake(), game.getField(), gamer.game()));
             switch (code) {
-                case UP: game.getSnake().setDirection(Directions.NORTH);
+                case UP:
+                    game.getSnake().setDirection(Directions.NORTH);
                     break;
-                case DOWN: game.getSnake().setDirection(Directions.SOUTH);
+                case DOWN:
+                    game.getSnake().setDirection(Directions.SOUTH);
                     break;
-                case LEFT: game.getSnake().setDirection(Directions.WEST);
+                case LEFT:
+                    game.getSnake().setDirection(Directions.WEST);
                     break;
-                case RIGHT: game.getSnake().setDirection(Directions.EAST);
+                case RIGHT:
+                    game.getSnake().setDirection(Directions.EAST);
 
             }
 
@@ -140,7 +158,30 @@ public class TrainingController {
     }
 
     @FXML
-    void saveSet(){
+    void nextTick(){
+        if (isRecording) {
+            KeyCode code = gamer.game();
+            switch (code) {
+                case UP:
+                    game.getSnake().setDirection(Directions.NORTH);
+                    break;
+                case DOWN:
+                    game.getSnake().setDirection(Directions.SOUTH);
+                    break;
+                case LEFT:
+                    game.getSnake().setDirection(Directions.WEST);
+                    break;
+                case RIGHT:
+                    game.getSnake().setDirection(Directions.EAST);
+
+            }
+            game.tick();
+            gameView.draw();
+        }
+    }
+
+    @FXML
+    void saveSet() {
         FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
         fileChooser.setTitle("Save Training Set");//Заголовок диалога
         FileChooser.ExtensionFilter extFilter =
@@ -158,7 +199,7 @@ public class TrainingController {
     }
 
     @FXML
-    void loadSet(){
+    void loadSet() {
         FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
         fileChooser.setTitle("Load Training Set");//Заголовок диалога
         FileChooser.ExtensionFilter extFilter =
@@ -170,7 +211,7 @@ public class TrainingController {
         }
     }
 
-    public void initialize(){
+    public void initialize() {
         trainingManager = new TrainingManager();
         neuralNetwork = new NeuralNetwork();
         setLabel.textProperty().bindBidirectional(pathToSetProperty, new StringConverter<Path>() {
@@ -187,7 +228,7 @@ public class TrainingController {
         });
     }
 
-    public void setCanvas(Canvas canvas){
+    public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
     }
 }

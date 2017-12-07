@@ -18,15 +18,19 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import ru.anton.snakeAI.Game;
 import ru.anton.snakeAI.gamers.Gamer;
 import ru.anton.snakeAI.gamers.HumanGamer;
+import ru.anton.snakeAI.gamers.NeuralGamer;
 import ru.anton.snakeAI.model.Directions;
+import ru.anton.snakeAI.neuralModel.NeuralNetwork;
 import ru.anton.snakeAI.view.GameView;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainController {
@@ -54,6 +58,22 @@ public class MainController {
 
     @FXML
     private Label scoresLabel;
+
+    @FXML
+    private Label loadedNetwork;
+
+    @FXML
+    void loadNetwork(){
+        FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
+        fileChooser.setTitle("Load Neural Network");//Заголовок диалога
+
+        File file = fileChooser.showOpenDialog(scoresLabel.getScene().getWindow());//Указываем текущую сцену CodeNote.mainStage
+        if (file != null) {
+            NeuralNetwork neuralNetwork = new NeuralNetwork();
+            neuralNetwork.loadNetwork(file.toString());
+            ((NeuralGamer)gamer).setNeuralNetwork(neuralNetwork);
+        }
+    }
 
     @FXML
     void goToTraining(){
@@ -92,7 +112,10 @@ public class MainController {
         gameTypeLabel.setText("Neural network game");
         neuralPane.setVisible(true);
 
+        game = new Game(canvasSize/10, 5, 2);
+        gamer = new NeuralGamer(game.getField(), game.getSnake());
 
+        gamer.init();
 
     }
 

@@ -37,6 +37,6 @@ public class TrainingManager {
     }
 
     private String getTrainingSetParams(){
-        return dataList.size()+" "+dataList.get(0).getSetSize()+" "+1;
+        return dataList.size()+" "+dataList.get(0).getSetSize()+" "+4;
     }
 }

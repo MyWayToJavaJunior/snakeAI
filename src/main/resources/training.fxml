@@ -38,8 +38,9 @@
             <Label fx:id="learnLabel" prefHeight="17.0" prefWidth="184.0" text="Nothing" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Button mnemonicParsing="false" onAction="#createNetwork" text="New Network" GridPane.rowIndex="4" />
             <Label fx:id="setLabel" text="New set" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label text="Records:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="recordsLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#saveNetwork" text="Save Network" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onAction="#nextTick" text="Next Tick" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

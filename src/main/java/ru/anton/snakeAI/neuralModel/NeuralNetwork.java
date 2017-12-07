@@ -12,7 +12,7 @@ import java.util.List;
 public class NeuralNetwork {
     private Fann fann;
 
-    public void createNetwork(int inputLayerSize, int hiddenLayerSize, int outputLayerSize){
+    public NeuralNetwork(){
         System.setProperty("jna.library.path", "C:\\Users\\Oceanos\\Downloads\\FANN-2.2.0-Source\\FANN-2.2.0-Source\\bin\\fannfloat.dll");
 
         System.out.println( System.getProperty("jna.library.path") );
@@ -20,11 +20,15 @@ public class NeuralNetwork {
         File file = new File(System.getProperty("jna.library.path"));
         System.out.println("Is the dll file there:" + file.exists());
         System.load(file.getAbsolutePath());
+    }
+
+    public void createNetwork(int inputLayerSize, int hiddenLayerSize, int outputLayerSize){
+
 
         List<Layer> layerList = new ArrayList<Layer>();
-        layerList.add(Layer.create(8, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
-        layerList.add(Layer.create(16, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
-        layerList.add(Layer.create(8, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
+        layerList.add(Layer.create(inputLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
+        layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
+        layerList.add(Layer.create(outputLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
         fann = new Fann(layerList);
     }
 
@@ -45,5 +49,9 @@ public class NeuralNetwork {
 
     public void saveNetwork(File destinationFile){
         fann.save(destinationFile.toString());
+    }
+
+    public Fann getFann(){
+        return fann;
     }
 }
