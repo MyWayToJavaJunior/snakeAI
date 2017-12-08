@@ -67,8 +67,10 @@ public class TrainingController {
 
     @FXML
     void createNetwork(ActionEvent event) {
-        int size = (int) (canvas.getWidth() / 10 * canvas.getWidth() / 10);
-        neuralNetwork.createNetwork(size, size * 2, 4);
+        //int size = (int) (canvas.getWidth() / 10 * canvas.getWidth() / 10);
+        //neuralNetwork.createNetwork(size, size * 2, 4);
+        int size = (game.getSnake().getElems().size()+1)*2;
+        neuralNetwork.createNetwork(size, size * 8, 4);
         networkPathLabel.setText("New Network");
     }
 
@@ -136,7 +138,9 @@ public class TrainingController {
     void saveTick() {
         if (isRecording) {
             KeyCode code = gamer.game();
-            trainingManager.addData(new TrainingData(game.getSnake(), game.getField(), gamer.game()));
+            TrainingData data = new TrainingData(game.getSnake(), game.getField(), gamer.game());
+
+            trainingManager.addData(data);
             switch (code) {
                 case UP:
                     game.getSnake().setDirection(Directions.NORTH);
@@ -182,6 +186,7 @@ public class TrainingController {
 
     @FXML
     void saveSet() {
+        System.out.println(trainingManager.getDataListString());
         FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
         fileChooser.setTitle("Save Training Set");//Заголовок диалога
         FileChooser.ExtensionFilter extFilter =

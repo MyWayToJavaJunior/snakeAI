@@ -8,18 +8,29 @@ import ru.anton.snakeAI.model.Snake;
 public class TrainingData {
     private int[][] field;
     private KeyCode currentButton;
+    private String data;
 
     public TrainingData(Snake snake, Field field, KeyCode currentButton) {
         this.currentButton = currentButton;
         this.field = prepareData(snake, field);
+        data = toString();
     }
 
     public static int[][] prepareData(Snake snake, Field field) {
-        int[][] result = new int[field.getSize()][field.getSize()];
+        /*int[][] result = new int[field.getSize()][field.getSize()];
         int[] food = field.getFood();
         result[food[0]][food[1]] = 3;
         snake.getElems().forEach(e -> result[e[0]][e[1]] = 1);
-        result[snake.getHead()[0]][snake.getHead()[1]] = 2;
+        result[snake.getHead()[0]][snake.getHead()[1]] = 2;*/
+
+        int [][] result = new int[snake.getElems().size()+1][2];
+
+        for (int i = 0; i < snake.getElems().size(); i++) {
+            result[i] = snake.getElems().get(i);
+        }
+
+        result[result.length-1] = field.getFood();
+
         return result;
     }
 
@@ -35,6 +46,10 @@ public class TrainingData {
         builder.append(System.lineSeparator());
         builder.append(getButtonDataSet(currentButton));
         return builder.toString();
+    }
+
+    public String getData() {
+        return data;
     }
 
     public int getSetSize() {

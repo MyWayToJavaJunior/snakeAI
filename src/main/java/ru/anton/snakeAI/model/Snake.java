@@ -58,14 +58,14 @@ public class Snake implements GameElement{
     }
 
     public void eat() {
-        int elemsSize = elems.size();
+        /*int elemsSize = elems.size();
 
         int xDiff = elems.get(elemsSize-1)[0] - elems.get(elemsSize-2)[0];
         int yDiff = elems.get(elemsSize-1)[1] - elems.get(elemsSize-2)[1];
 
         int x = elems.get(elemsSize-1)[0] - xDiff;
         int y = elems.get(elemsSize-1)[1] - yDiff;
-        elems.add(new int[]{x,y});
+        elems.add(new int[]{x,y});*/
         score++;
     }
 
@@ -77,6 +77,7 @@ public class Snake implements GameElement{
         }
     }
 
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -85,5 +86,9 @@ public class Snake implements GameElement{
             result.append(" ");
         });
         return result.toString();
+    }
+
+    public int getScore() {
+        return score;
     }
 }

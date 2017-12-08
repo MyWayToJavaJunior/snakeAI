@@ -19,6 +19,7 @@ public class TrainingManager {
 
     public void addData(TrainingData data){
         dataList.add(data);
+        System.out.println("data "+data);
         recordsCount.setValue(dataList.size());
     }
 
@@ -26,7 +27,8 @@ public class TrainingManager {
         StringBuilder builder = new StringBuilder();
         builder.append(getTrainingSetParams()).append(System.lineSeparator());
         dataList.forEach(d->{
-            builder.append(d.toString());
+            System.out.println(d.getData());
+            builder.append(d.getData());
             builder.append(System.lineSeparator());
         });
         return builder.toString();
