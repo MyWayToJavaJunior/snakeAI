@@ -1,6 +1,7 @@
 package ru.anton.snakeAI.neuralModel;
 
 import javafx.scene.input.KeyCode;
+import ru.anton.snakeAI.model.Directions;
 import ru.anton.snakeAI.model.Field;
 import ru.anton.snakeAI.model.Snake;
 
@@ -9,10 +10,12 @@ public class TrainingData {
     private int[][] field;
     private KeyCode currentButton;
     private String data;
+    private String direction;
 
     public TrainingData(Snake snake, Field field, KeyCode currentButton) {
         this.currentButton = currentButton;
         this.field = prepareData(snake, field);
+        direction = getButtonDataSet(currentButton, snake.getDirection());
         data = toString();
     }
 
@@ -44,7 +47,7 @@ public class TrainingData {
             }
         }
         builder.append(System.lineSeparator());
-        builder.append(getButtonDataSet(currentButton));
+        builder.append(direction);
         return builder.toString();
     }
 
@@ -56,20 +59,68 @@ public class TrainingData {
         return field.length * field[0].length;
     }
 
-    public static String getButtonDataSet(KeyCode keyCode) {
-        String result = "1 0 0 0";
-        switch (keyCode) {
-            case UP:
-                result = "1 0 0 0";
+    public static String getButtonDataSet(KeyCode keyCode, Directions direction) {
+        String result = "0 0 0";
+        switch (direction) {
+            case NORTH:
+                switch (keyCode) {
+                    case UP:
+                        result = "0 1 0";
+                        break;
+                    case RIGHT:
+                        result = "0 0 1";
+                        break;
+                    case DOWN:
+                        result = "0 1 0";
+                        break;
+                    case LEFT:
+                        result = "1 0 0";
+                }
                 break;
-            case RIGHT:
-                result = "0 1 0 0";
+            case EAST:
+                switch (keyCode) {
+                    case UP:
+                        result = "1 0 0";
+                        break;
+                    case RIGHT:
+                        result = "0 1 0";
+                        break;
+                    case DOWN:
+                        result = "0 0 1";
+                        break;
+                    case LEFT:
+                        result = "0 1 0";
+                }
                 break;
-            case DOWN:
-                result = "0 0 1 0";
+            case SOUTH:
+                switch (keyCode) {
+                    case UP:
+                        result = "0 1 0";
+                        break;
+                    case RIGHT:
+                        result = "1 0 0";
+                        break;
+                    case DOWN:
+                        result = "0 1 0";
+                        break;
+                    case LEFT:
+                        result = "0 0 1";
+                }
                 break;
-            case LEFT:
-                result = "0 0 0 1";
+            case WEST:
+                switch (keyCode) {
+                    case UP:
+                        result = "0 0 1";
+                        break;
+                    case RIGHT:
+                        result = "0 1 0";
+                        break;
+                    case DOWN:
+                        result = "1 0 0";
+                        break;
+                    case LEFT:
+                        result = "0 1 0";
+                }
         }
         return result;
     }
@@ -89,6 +140,7 @@ public class TrainingData {
             case 3:
                 result = KeyCode.LEFT;
         }
+        System.out.println(result);
         return result;
     }
 

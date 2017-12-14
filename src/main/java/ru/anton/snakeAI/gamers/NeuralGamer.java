@@ -1,6 +1,7 @@
 package ru.anton.snakeAI.gamers;
 
 import javafx.scene.input.KeyCode;
+import ru.anton.snakeAI.model.Directions;
 import ru.anton.snakeAI.model.Field;
 import ru.anton.snakeAI.model.Snake;
 import ru.anton.snakeAI.neuralModel.NeuralNetwork;
@@ -45,8 +46,18 @@ public class NeuralGamer extends AbstractGamer{
         System.out.println("result "+Arrays.toString(answer));
         int maxPos = getMaxPosition(answer);
 
+        LocalDirection localDirection = LocalDirection.FORWARD;
 
-        return  TrainingData.getKeyCode(maxPos);
+        switch (maxPos) {
+            case 0: localDirection = LocalDirection.LEFT;
+                break;
+            case 1 : localDirection = LocalDirection.FORWARD;
+                break;
+            case 2: localDirection = LocalDirection.RIGHT;
+        }
+
+
+        return  getKeyCode(snake.getDirection(), localDirection);
     }
 
     public void setNeuralNetwork(NeuralNetwork neuralNetwork){
@@ -59,6 +70,28 @@ public class NeuralGamer extends AbstractGamer{
             if (array[i]>array[result]) result = i;
         }
         return result;
+    }
+
+    /**
+     *
+     * @param currenDdirection текущее направление
+     * @param localDirection изменение направления
+     * @return код клавиши
+     */
+    private KeyCode getKeyCode(Directions currenDdirection, LocalDirection localDirection){
+        int result = currenDdirection.absoluteDir+localDirection.diff;
+        if (result<0) result = 3;
+        if (result>3) result = 0;
+        return TrainingData.getKeyCode(result);
+    }
+
+    public static enum LocalDirection{
+        RIGHT(1), FORWARD(0), LEFT(-1);
+        int diff;
+
+        LocalDirection(int diff){
+            this.diff = diff;
+        }
     }
 
 

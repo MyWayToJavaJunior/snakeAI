@@ -15,7 +15,7 @@ public class Snake implements GameElement{
         size = initSize;
         elems = new ArrayList<>();
         initSnake();
-        setDirection(Directions.SOUTH);
+        setDirection(Directions.WEST);
     }
 
     public void setDirection(Directions direction){
@@ -90,5 +90,9 @@ public class Snake implements GameElement{
 
     public int getScore() {
         return score;
+    }
+
+    public Directions getDirection() {
+        return direction;
     }
 }

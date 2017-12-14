@@ -39,6 +39,6 @@ public class TrainingManager {
     }
 
     private String getTrainingSetParams(){
-        return dataList.size()+" "+dataList.get(0).getSetSize()+" "+4;
+        return dataList.size()+" "+dataList.get(0).getSetSize()+" "+3; //FIXME hardcode
     }
 }
