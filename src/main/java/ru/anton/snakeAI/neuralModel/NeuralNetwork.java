@@ -25,7 +25,7 @@ public class NeuralNetwork {
     public void createNetwork(int inputLayerSize, int hiddenLayerSize, int outputLayerSize){
 
 
-        List<Layer> layerList = new ArrayList<Layer>();
+        List<Layer> layerList = new ArrayList<>();
         layerList.add(Layer.create(inputLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
         layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
         layerList.add(Layer.create(outputLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
