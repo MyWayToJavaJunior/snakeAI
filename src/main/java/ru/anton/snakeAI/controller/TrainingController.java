@@ -69,8 +69,8 @@ public class TrainingController {
     void createNetwork(ActionEvent event) {
         //int size = (int) (canvas.getWidth() / 10 * canvas.getWidth() / 10);
         //neuralNetwork.createNetwork(size, size * 2, 4);
-        int size = (game.getSnake().getElems().size()+1)*2;
-        neuralNetwork.createNetwork(size, size * 8, 3); //FIXME hardcode
+        int size = 4;
+        neuralNetwork.createNetwork(size, size * 5, 3); //FIXME hardcode
         networkPathLabel.setText("New Network");
     }
 

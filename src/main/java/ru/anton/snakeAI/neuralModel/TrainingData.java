@@ -7,56 +7,64 @@ import ru.anton.snakeAI.model.Snake;
 
 
 public class TrainingData {
-    private int[][] field;
     private KeyCode currentButton;
-    private String data;
+    private String dataString;
+    private float[] data;
     private String direction;
 
     public TrainingData(Snake snake, Field field, KeyCode currentButton) {
         this.currentButton = currentButton;
-        this.field = prepareData(snake, field);
+        this.data = prepareData(snake, field);
         direction = getButtonDataSet(currentButton, snake.getDirection());
-        data = toString();
+        dataString = toString();
     }
 
-    public static int[][] prepareData(Snake snake, Field field) {
+    public static float[] prepareData(Snake snake, Field field) {
         /*int[][] result = new int[field.getSize()][field.getSize()];
         int[] food = field.getFood();
         result[food[0]][food[1]] = 3;
         snake.getElems().forEach(e -> result[e[0]][e[1]] = 1);
         result[snake.getHead()[0]][snake.getHead()[1]] = 2;*/
 
-        int [][] result = new int[snake.getElems().size()+1][2];
+        /*int [][] result = new int[snake.getElems().size()+1][2];
 
         for (int i = 0; i < snake.getElems().size(); i++) {
             result[i] = snake.getElems().get(i);
         }
 
-        result[result.length-1] = field.getFood();
+        result[result.length-1] = field.getFood();*/
+        float dirX = snake.getHead()[0]+snake.getDirection().xDiff;
+        float dirY = snake.getHead()[1]+snake.getDirection().yDiff;
+        float[] result = new float[4];
+        result[0] = snake.getHead()[0] - dirX;
+        result[1] = dirY - snake.getHead()[1];
+        result[2] = field.getFood()[0] - dirX;
+        result[3] = dirY - field.getFood()[1];
+        //snake.getDirection()
 
         return result;
     }
 
+
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (int[] aField : field) {
-            for (int anAField : aField) {
-                builder.append(anAField);
-                builder.append(" ");
-            }
+        for (float d : data) {
+            builder.append(d);
+            builder.append(" ");
         }
         builder.append(System.lineSeparator());
         builder.append(direction);
         return builder.toString();
     }
 
-    public String getData() {
-        return data;
+    public String getDataString() {
+        return dataString;
     }
 
     public int getSetSize() {
-        return field.length * field[0].length;
+        return data.length;
     }
 
     public static String getButtonDataSet(KeyCode keyCode, Directions direction) {

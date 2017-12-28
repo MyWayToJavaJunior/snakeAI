@@ -25,14 +25,14 @@ public class NeuralGamer extends AbstractGamer{
 
     @Override
     public KeyCode game() {
-        int[][] cells = TrainingData.prepareData(snake, field);
-        float[] result = new float[12]; //FIXME hardcode
+        float[] cells = TrainingData.prepareData(snake, field);
+        //float[] result = new float[12]; //FIXME hardcode
         /*for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 result[j+i*cells.length] = cells[i][j];
             }
         }*/
-        List<Float> list = new ArrayList<>();
+       /* List<Float> list = new ArrayList<>();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 list.add((float) cells[i][j]);
@@ -40,9 +40,9 @@ public class NeuralGamer extends AbstractGamer{
         }
         for (int i = 0; i < list.size(); i++) {
             result[i] = list.get(i);   //FIXME list to array?
-        }
-        System.out.println(Arrays.toString(result));
-        float[] answer = neuralNetwork.getFann().run(result);
+        }*/
+        System.out.println(Arrays.toString(cells));
+        float[] answer = neuralNetwork.getFann().run(cells);
         System.out.println("result "+Arrays.toString(answer));
         int maxPos = getMaxPosition(answer);
 

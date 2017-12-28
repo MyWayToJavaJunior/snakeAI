@@ -27,8 +27,8 @@ public class TrainingManager {
         StringBuilder builder = new StringBuilder();
         builder.append(getTrainingSetParams()).append(System.lineSeparator());
         dataList.forEach(d->{
-            System.out.println(d.getData());
-            builder.append(d.getData());
+            System.out.println(d.getDataString());
+            builder.append(d.getDataString());
             builder.append(System.lineSeparator());
         });
         return builder.toString();
