@@ -70,7 +70,7 @@ public class TrainingController {
         //int size = (int) (canvas.getWidth() / 10 * canvas.getWidth() / 10);
         //neuralNetwork.createNetwork(size, size * 2, 4);
         int size = 4;
-        neuralNetwork.createNetwork(size, size * 5, 3); //FIXME hardcode
+        neuralNetwork.createNetwork(size, size * 2, 3); //FIXME hardcode
         networkPathLabel.setText("New Network");
     }
 

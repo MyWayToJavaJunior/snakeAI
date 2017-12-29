@@ -27,8 +27,10 @@ public class NeuralNetwork {
 
         List<Layer> layerList = new ArrayList<>();
         layerList.add(Layer.create(inputLayerSize));
-        layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
-        layerList.add(Layer.create(outputLayerSize, ActivationFunction.FANN_SIGMOID_SYMMETRIC, 0.01f));
+        layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID, 0.01f));
+        layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID, 0.01f));
+        layerList.add(Layer.create(hiddenLayerSize, ActivationFunction.FANN_SIGMOID, 0.01f));
+        layerList.add(Layer.create(outputLayerSize, ActivationFunction.FANN_SIGMOID, 0.01f));
         fann = new Fann(layerList);
     }
 
